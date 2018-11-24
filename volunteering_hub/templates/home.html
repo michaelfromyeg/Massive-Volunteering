@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+	<h1>Homepage</h1>
+	<p>This is the Homepage<p>
+	<h2>Current Opportunities</h2>
+
+	{% for experience in experiences %}
+		<h1>{{ experience.title }}</h1>
+		<h2>Brought to you by {{ experience.organization }} (posted {{ experience.date_posted }}) </h2>
+		<p>{{ experience.content }}</p>
+		<p>Signup for this opportunity ends {{ experience.date_expiry }}</p>
+	{% endfor %}
+
+{% endblock content %}
