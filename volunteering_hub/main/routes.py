@@ -2,15 +2,17 @@ import os
 import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
-from main import app, db, bcrypt
+from main import app, db, bcrypt, mail
 from main.models import Org, Exp # Python still runs entire module! If db imported, must happen first
-from main.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
+from main.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, RequestResetForm, ResetPasswordForm
 from flask_login import login_user, current_user, logout_user, login_required
+from flask_mail import Message
 
 @app.route("/")
 @app.route("/home")
 def home():
-	experiences = Exp.query.all()
+	page = request.args.get('page', 1, type=int)
+	experiences = Exp.query.order_by(Exp.date_posted.desc()).paginate(page=page, per_page=5)
 	return render_template('home.html', experiences=experiences)
 
 @app.route("/about")
@@ -135,6 +137,48 @@ def delete_post(exp_id):
 	flash('Your post has been deleted.', 'success')
 	return redirect(url_for('home'))
 
+@app.route("/user/<string:org_name>")
+def user_posts(org_name):
+	page = request.args.get('page', 1, type=int)
+	org = Org.query.filter_by(org_name=org_name).first_or_404()
+	experiences = Exp.query.filter_by(org=org.id).order_by(Exp.date_posted.desc()).paginate(page=page, per_page=5)
+	return render_template('user_posts.html', experiences=experiences, organization=org)
 
+@app.route("/reset_password", methods=['GET','POST'])
+def reset_request():
+	if current_user.is_authenticated:
+		return redirect(url_for('home'))
+	form = RequestResetForm()
+	if form.validate_on_submit():
+		org = Org.query.filter_by(email=form.email.data).first()
+		send_reset_email(org)
+		flash('Check your inbox for further instructions.', 'info')
+		return redirect(url_for('login'))
+	return render_template('reset_request.html', title='Reset Password', form=form)
 
+def send_reset_email(org):
+	token = org.get_reset_token()
+	msg = Message('Password Reset Request', sender='michaelfromyeg@gmail.com', recipients=[org.email])
+	msg.body = f'''To reset your password, visit the following link:
+{url_for('reset_token', token=token, _external=True)}
 
+If you did not make this request, then simply ignore this email and no changes will occur.
+'''
+	mail.send(msg)
+
+@app.route("/reset_password/<token>", methods=['GET','POST'])
+def reset_token(token):
+	if current_user.is_authenticated:
+		return redirect(url_for('home'))
+	org = Org.verify_reset_token(token)
+	if org is None:
+		flash('That is an invalid or expired token.', 'warning')
+		return redirect(url_for('reset_request'))
+	form = ResetPasswordForm()
+	if form.validate_on_submit():
+		hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+		org.password = hashed_password
+		db.session.commit()
+		flash(f'Your password has been updated.', 'success')
+		return redirect(url_for('login'))
+	return render_template('reset_token.html', title='Reset Password', form=form)

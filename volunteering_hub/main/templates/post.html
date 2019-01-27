@@ -3,7 +3,7 @@
 	<article class="media content-section">
 		<div class="media-body">
 			<div class="article-metadasta">
-				<a class="mr-2" href="#">Presented by {{ experience.org }}</a><br>
+				<a class="mr-2" href="{{ url_for('user_posts', org_name=experience.organization.org_name) }}">Presented by {{ experience.org }}</a><br>
 				<small class="text-muted">Signup for this opportunity ends {{ experience.date_expiry.strftime('%Y-%m-%d') }}</small>
 				{% if experience.organization == current_user %}
 					<div>
