@@ -36,7 +36,7 @@ class Exp(db.Model): # table name is 'exp' by default (note: lowercase 'o')
 	name = db.Column(db.String(100), nullable=False)
 	content = db.Column(db.Text, nullable=False)
 	date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-	date_expiry = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+	date_expiry = db.Column(db.DateTime, nullable=False)
 	org = db.Column(db.Integer, db.ForeignKey('org.id'), nullable=False)
 
 	def __repr__(self):

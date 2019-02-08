@@ -3,19 +3,25 @@
 {% block content %}
 
 	<h1>Homepage</h1>
-	<p>Welcome to Massive Volunteering. New here? <a href="/register">Register here</a>. Alternatively, you can <a href="/login">login</a> here.</p>
+
+	<p>Welcome to Massive Volunteering. New here? <a href="/register">Register here</a>. Alternatively, you can <a href="/login">login </a>here.</p>
+
 	<h2>Current Opportunities</h2>
+
+	<h4>Sort by</h4>
+	<a class="btn btn-info mb-4" href="{{ url_for('index.home', sortby='date_expiry') }}">Date Expiry</a>
+	<a class="btn btn-info mb-4" href="{{ url_for('index.home', sortby='date_posted') }}">Date Posted</a>
 
 	{% for experience in experiences.items %}
 	<article class="media content-section">
 		<img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + experience.organization.image_file ) }}">
 		<div class="media-body">
 			<div class="article-metadasta">
-				<a class="mr-2" href="{{ url_for('user_posts', org_name=experience.organization.org_name) }}">Presented by {{ experience.organization.org_name }}</a><br>
+				<a class="mr-2" href="{{ url_for('orgs.user_posts', org_name=experience.organization.org_name) }}">Presented by {{ experience.organization.org_name }}</a><br>
 				<small class="text-muted">Signup for this opportunity ends {{ experience.date_expiry.strftime('%Y-%m-%d') }}</small>
-				<h2><a class="article-title" href="{{ url_for('post', exp_id=experience.id) }}">{{ experience.name }}</a></h2>
+				<h2><a class="article-title" href="{{ url_for('posts.post', exp_id=experience.id) }}">{{ experience.name }}</a></h2>
 				<p class="article-content">{{ experience.content }}</p>
-				<a href="#" class="link">Go to this opporunity</a>
+				<a href="#" class="link">Go to this opporunity</a> • 
 				<a href="#" class="link">Set a reminder</a>
 			</div>
 		</div>
@@ -26,9 +32,9 @@
 	{% for page_num in experiences.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
 		{% if page_num %}
 			{% if experiences.page == page_num %}
-				<a class="btn btn-info mb-4" href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
+				<a class="btn btn-info mb-4" href="{{ url_for('index.home', page=page_num) }}">{{ page_num }}</a>
 			{% else %}
-				<a class="btn btn-outline-info mb-4" href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
+				<a class="btn btn-outline-info mb-4" href="{{ url_for('index.home', page=page_num) }}">{{ page_num }}</a>
 			{% endif %}
 		{% else %}
 			...

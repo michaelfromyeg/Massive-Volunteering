@@ -1,22 +1,25 @@
 {% extends "layout.html" %}
 {% block content %}
+
+
 	<article class="media content-section">
+		<img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + experience.organization.image_file ) }}">
 		<div class="media-body">
 			<div class="article-metadasta">
-				<a class="mr-2" href="{{ url_for('user_posts', org_name=experience.organization.org_name) }}">Presented by {{ experience.org }}</a><br>
+				<a class="mr-2" href="{{ url_for('orgs.user_posts', org_name=experience.organization.org_name) }}">Presented by {{ experience.organization.org_name }}</a><br>
 				<small class="text-muted">Signup for this opportunity ends {{ experience.date_expiry.strftime('%Y-%m-%d') }}</small>
 				{% if experience.organization == current_user %}
 					<div>
-						<a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_post', exp_id=experience.id) }}">Update</a>
+						<a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('posts.update_post', exp_id=experience.id) }}">Update</a>
 						<button type="button" class="btn btn-danger btn-sm mt-1 mb-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
 					</div>
 				{% endif %}
-			</div>
-				<h2 class="article-title">{{ experience.name }}</h2>
+				<h2><a class="article-title" href="{{ url_for('posts.post', exp_id=experience.id) }}">{{ experience.name }}</a></h2>
 				<p class="article-content">{{ experience.content }}</p>
-				<a href="#" class="link">Go to this opporunity</a>
+				<a href="#" class="link">Go to this opporunity</a> • 
 				<a href="#" class="link">Set a reminder</a>
 			</div>
+		</div>
 	</article>
 
 	<!-- Modal -->
@@ -31,7 +34,7 @@
 	        </div>
 	        <div class="modal-footer">
 	          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	          <form action="{{ url_for('delete_post', exp_id=experience.id) }}" method="POST">
+	          <form action="{{ url_for('posts.delete_post', exp_id=experience.id) }}" method="POST">
 	            <input class="btn btn-danger" type="submit" value="Delete">
 	          </form>
 	        </div>

@@ -18,7 +18,6 @@
 				<!-- Email -->
 				<div class="form-group">
 					{{ form.email.label(class="form-control-label") }}
-
 					{% if form.email.errors %}
 						{{ form.email(class="form-control form-control.lg is-invalid")}}
 						<div class="invalid-feedback">
@@ -52,7 +51,7 @@
 					{{ form.remember.label(class="form-check-label") }}
 				</div>
 				<small class="text-muted ml-2">
-					<a href="{{ url_for('reset_request') }}">Forgot password?</a>
+					<a href="{{ url_for('orgs.reset_request') }}">Forgot password?</a>
 				</small>
 			</fieldset>
 
@@ -63,7 +62,7 @@
 		</form>
 
 		<div class="border-top pt-3">
-			<small class="text-muted">Need an account? <a class="ml-2" href="{{ url_for('register') }}">Sign up today!</a></small>
+			<small class="text-muted">Need an account? <a class="ml-2" href="{{ url_for('orgs.register') }}">Sign up today!</a></small>
 		</div>
 
 		</div>
