@@ -2,9 +2,13 @@
 
 {% block content %}
 
-	<h1>Homepage</h1>
-
-	<p>Welcome to Massive Volunteering. New here? <a href="/register">Register here</a>. Alternatively, you can <a href="/login">login </a>here.</p>
+	{% if current_user.is_authenticated %}
+		<h1>Welcome {{ current_user.org_name }}!</h1>
+		<p>Check out current experiences below.</p>
+	{% else %}
+		<h1>Welcome!</h1>
+		<p>Welcome to Massive Volunteering. New here? <a href="/register">Register today</a>! Alternatively, you can <a href="/login">login </a>here.</p>
+	{% endif %}
 
 	<h2>Current Opportunities</h2>
 
