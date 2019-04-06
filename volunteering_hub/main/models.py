@@ -15,7 +15,7 @@ class Org(db.Model, UserMixin): # table name is 'org' by default (note: lowercas
 	password = db.Column(db.String(60), nullable=False)
 	experiences = db.relationship('Exp', backref='organization', lazy=True)
 
-	def get_reset_token(self, expires_seconds=1800):
+	def get_reset_token(self, expiresO_seconds=1800):
 		s = Serializer(app.config['SECRET_KEY'], expires_seconds)
 		return s.dumps({'org_id': self.id}).decode('utf-8')
 
