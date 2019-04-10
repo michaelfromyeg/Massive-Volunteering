@@ -41,6 +41,7 @@ def update_post(exp_id):
 	elif request.method == 'GET':
 		form.title.data = exper.name
 		form.content.data = exper.content
+		form.date_expires.data = exper.date_expiry
 	return render_template('create_post.html', title='Update Post', form=form, legend='Update Post')
 
 @posts.route("/post/<int:exp_id>/delete", methods=['POST'])

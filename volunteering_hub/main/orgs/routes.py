@@ -29,7 +29,7 @@ def login():
 	form = LoginForm()
 	if form.validate_on_submit():
 		org = Org.query.filter_by(email=form.email.data).first()
-		if form.email.data == 'admin@massive.com' and form.password.data == 'mcnallytigers':
+		if form.email.data == 'admin@massive.com' and form.password.data == 'password':
 			flash(f'You have been logged in as an administrator', 'success')
 			return redirect(url_for('index.home'))
 		elif org and bcrypt.check_password_hash(org.password, form.password.data):

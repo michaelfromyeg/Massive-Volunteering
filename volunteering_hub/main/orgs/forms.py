@@ -59,7 +59,7 @@ class RequestResetForm(FlaskForm):
 	def validate_email(self, email):
 		email = Org.query.filter_by(email=email.data).first()
 		if email is None:
-			flash(f'There is not account with that email. Please make an account first.', 'danger')
+			flash(f'There is no account with that email. Please make an account first.', 'danger')
 			raise ValidationError('No email.')
 
 class ResetPasswordForm(FlaskForm):
