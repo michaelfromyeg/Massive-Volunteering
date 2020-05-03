@@ -1,5 +1,21 @@
-# Massive-Volunteering
+# Massive Volunteering
+A website built to connect high school students with organizations actively searching for volunteers. [Here's](https://github.com/michaelfromyeg/Massive-Volunteering) the GitHub repository.
 
-This is a project I am completing for my Computer Science internal assessment.
+### Background
+In high school, I completed the IB program. For my Computer Science Internal Assessment (IA) I decided to build a website for a club I was also helping lead. The basic goal was to be able to allow organizations looking for volunteers to advertise opportunities directly to high school students.
 
-Massive Volunteering is a club at McNally that seeks to connect volunteers with community organizations. The difficulty right now with the club is that there any many steps in going from a community organization to the student. I am creating a website that allows organizations to “register” their initiative directly, and students can access the website and see the opportunities instantly!
+### Usage
+Volunteers can create an account and profile. Organizations can as well. There's a blog-style feed of opportunities that appears in the user's feed.
+
+### How it's made
+The project is built using Python Flask and Bootstrap for the styling.
+
+### Challenges
+This was the first real web project I ever built, so I had hard time building things without being reliant on tutorials.
+
+### Accomplishments
+The app works pretty nicely, and it received a $500 grant from the Edmonton Community Foundation! I hope to deploy it Summer 2020.
+
+### Future
+I need to add the organization "flow," and create better ways for users to be notified. An iOS and Android variant of this project would also be really cool! The GitHub issues are [viewable](https://github.com/michaelfromyeg/Massive-Volunteering/issues) here.
+
