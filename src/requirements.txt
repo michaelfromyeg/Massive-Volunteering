@@ -1,4 +1,4 @@
-﻿astroid==2.3.3
+astroid==2.3.3
 attrs==19.3.0
 autopep8==1.5.2
 backcall==0.1.0
@@ -13,7 +13,7 @@ defusedxml==0.6.0
 dnspython==1.16.0
 email-validator==1.1.0
 entrypoints==0.3
-Flask==1.1.2
+Flask==2.3.2
 Flask-Bcrypt==0.7.1
 Flask-Login==0.5.0
 Flask-Mail==0.9.1
